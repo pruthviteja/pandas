@@ -58,7 +58,7 @@ before_install:
 
 install:
   - echo ${TEST_VAR}
-  - if [${TEST_VAR} == 1]; then
+  - if [${TEST_VAR} == "1"]; then
       echo "variable";
     else
       echo "install start";
@@ -69,7 +69,7 @@ install:
     fi
 
 script:
-  - if [${TEST_VAR} == 1]; then
+  - if [${TEST_VAR} == "1"]; then
       echo "variable";
     else
       echo "script start";
@@ -78,7 +78,7 @@ script:
       ci/run_tests.sh;
     fi
 after_script:
-  - if [${TEST_VAR} == 1]; then
+  - if [${TEST_VAR} == "1"]; then
       echo "variable";
     else
       echo "after_script start";
