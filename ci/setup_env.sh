@@ -41,8 +41,9 @@ else
   wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh;
 fi
 chmod +x miniconda.sh
+echo "Before"
 ./miniconda.sh -b -p $MINICONDA_DIR
-
+echo "after"
 export PATH=$MINICONDA_DIR/bin:$PATH
 
 echo
