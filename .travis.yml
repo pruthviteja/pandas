@@ -57,7 +57,7 @@ before_install:
   - export BOTO_CONFIG=/dev/null
 
 install:
-  - if [TEST_VAR == "1"]; then
+  - if [$TEST_VAR == "1"]; then
       echo "variable";
     else
       echo "install start";
@@ -67,7 +67,7 @@ install:
       echo "install done";
 
 script:
-  - if [TEST_VAR == "1"]; then
+  - if [$TEST_VAR == "1"]; then
       echo "variable";
     else
       echo "script start";
@@ -76,7 +76,7 @@ script:
       ci/run_tests.sh;
 
 after_script:
-  - if [TEST_VAR == "1"]; then
+  - if [$TEST_VAR == "1"]; then
       echo "variable";
     else
       echo "after_script start";
