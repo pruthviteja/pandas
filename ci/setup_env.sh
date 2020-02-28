@@ -36,7 +36,7 @@ else
   exit 1
 fi
 if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
-  wget -q "https://github.com/conda-forge/miniforge/releases/download/4.8.2-1/Miniforge-4.8.2-1-Linux-aarch64.sh" -O miniconda.sh;
+  wget -q "https://github.com/conda-forge/miniforge/releases/download/4.8.2-1/Miniforge3-4.8.2-1-Linux-aarch64.sh" -O miniconda.sh;
 else
   wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh;
 fi
