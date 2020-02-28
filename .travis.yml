@@ -65,6 +65,7 @@ install:
       ci/setup_env.sh;
       ci/submit_cython_cache.sh;
       echo "install done";
+    fi
 
 script:
   - if [$TEST_VAR == "1"]; then
@@ -74,7 +75,7 @@ script:
       echo "$JOB";
       source activate pandas-dev;
       ci/run_tests.sh;
-
+    fi
 after_script:
   - if [$TEST_VAR == "1"]; then
       echo "variable";
@@ -83,3 +84,4 @@ after_script:
       source activate pandas-dev && pushd /tmp && python -c "import pandas; pandas.show_versions();" && popd;
       ci/print_skipped.py;
       echo "after_script done";
+    fi
