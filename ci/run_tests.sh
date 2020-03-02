@@ -19,8 +19,11 @@ if [[ $(uname) == "Linux" && -z $DISPLAY ]]; then
     export DISPLAY=":0"
     XVFB="xvfb-run "
 fi
-
-PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas"
+if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
+    PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" -n auto --dist=loadfile --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas";
+else
+    PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas";
+fi
 
 echo $PYTEST_CMD
 sh -c "$PYTEST_CMD"
