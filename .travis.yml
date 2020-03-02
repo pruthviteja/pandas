@@ -32,13 +32,16 @@ matrix:
 
   include:
     - env:
-        - JOB="build"
+        - JOB="build_wheel"
 
     - env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network and not clipboard)"
 
 before_install:
   - echo "before_install"
+  - if [[ "${JOB}" == "build_wheel" ]]; then
+      ci/build_wheel.sh;
+    fi
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
   - python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
@@ -58,8 +61,8 @@ before_install:
 
 install:
   - echo "${JOB}"
-  - if [["${JOB}" == "build"]]; then
-      ci/build_wheel.sh;
+  - if [[ "${JOB}" == "build_wheel" ]]; then
+      echo "1";
     else
       echo "install start";
       ci/prep_cython_cache.sh;
@@ -69,8 +72,8 @@ install:
     fi
 
 script:
-  - if ["${JOB}" == "build"]; then
-      echo "variable";
+  - if [ "${JOB}" == "build_wheel" ]; then
+      echo "2";
     else
       echo "script start";
       echo "$JOB";
@@ -78,8 +81,8 @@ script:
       ci/run_tests.sh;
     fi
 after_script:
-  - if ["${JOB}" == "build"]; then
-      echo "variable";
+  - if [ "${JOB}" == "build_wheel" ]; then
+      echo "3";
     else
       echo "after_script start";
       source activate pandas-dev && pushd /tmp && python -c "import pandas; pandas.show_versions();" && popd;
