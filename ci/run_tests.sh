@@ -20,7 +20,7 @@ if [[ $(uname) == "Linux" && -z $DISPLAY ]]; then
     XVFB="xvfb-run "
 fi
 if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
-    PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" -n auto $TEST_ARGS $COVERAGE pandas";
+    PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" $TEST_ARGS $COVERAGE pandas";
 else
     PYTEST_CMD="${XVFB}pytest -m \"$PATTERN\" -n auto --dist=loadfile -s --strict --durations=10 --junitxml=test-data.xml $TEST_ARGS $COVERAGE pandas";
 fi
