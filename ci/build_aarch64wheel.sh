@@ -1,4 +1,4 @@
 pip install cython
-pip install numpy
 pip install wheel
+pip install -r requirements-dev.txt
 python setup.py bdist_wheel
