@@ -32,16 +32,38 @@ matrix:
 
   include:
     - env:
-        - JOB="build_wheel"
+        - JOB="3.8" ENV_FILE="ci/deps/travis-38.yaml" PATTERN="(not slow and not network and not clipboard)"
 
     - env:
         - JOB="3.7" ENV_FILE="ci/deps/travis-37.yaml" PATTERN="(not slow and not network and not clipboard)"
+        
+    - arch: arm64
+      env:
+        - JOB="3.7" ENV_FILE="ci/deps/travis-37-arm64.yaml" PATTERN="(not slow and not network and not clipboard)"
+
+    - env:
+        - JOB="3.6, locale" ENV_FILE="ci/deps/travis-36-locale.yaml" PATTERN="((not slow and not network and not clipboard) or (single and db))" LOCALE_OVERRIDE="zh_CN.UTF-8" SQL="1"
+      services:
+        - mysql
+        - postgresql
+
+    - env:
+        # Enabling Deprecations when running tests
+        # PANDAS_TESTING_MODE="deprecate" causes DeprecationWarning messages to be displayed in the logs
+        # See pandas/_testing.py for more details.
+        - JOB="3.6, coverage" ENV_FILE="ci/deps/travis-36-cov.yaml" PATTERN="((not slow and not network and not clipboard) or (single and db))" PANDAS_TESTING_MODE="deprecate" COVERAGE=true SQL="1"
+      services:
+        - mysql
+        - postgresql
+
+    - env:
+        - JOB="3.6, slow" ENV_FILE="ci/deps/travis-36-slow.yaml" PATTERN="slow" SQL="1"
+      services:
+        - mysql
+        - postgresql
 
 before_install:
   - echo "before_install"
-  - if [[ "${JOB}" == "build_wheel" ]]; then
-      sudo sh ./ci/build_wheel.sh;
-    fi
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
   - python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
@@ -60,32 +82,20 @@ before_install:
   - export BOTO_CONFIG=/dev/null
 
 install:
-  - echo "${JOB}"
-  - if [[ "${JOB}" == "build_wheel" ]]; then
-      echo "1";
-    else
-      echo "install start";
-      ci/prep_cython_cache.sh;
-      ci/setup_env.sh;
-      ci/submit_cython_cache.sh;
-      echo "install done";
-    fi
+  - echo "install start"
+  - ci/prep_cython_cache.sh
+  - ci/setup_env.sh
+  - ci/submit_cython_cache.sh
+  - echo "install done"
 
 script:
-  - if [ "${JOB}" == "build_wheel" ]; then
-      echo "2";
-    else
-      echo "script start";
-      echo "$JOB";
-      source activate pandas-dev;
-      ci/run_tests.sh;
-    fi
+  - echo "script start"
+  - echo "$JOB"
+  - source activate pandas-dev
+  - ci/run_tests.sh
+
 after_script:
-  - if [ "${JOB}" == "build_wheel" ]; then
-      echo "3";
-    else
-      echo "after_script start";
-      source activate pandas-dev && pushd /tmp && python -c "import pandas; pandas.show_versions();" && popd;
-      ci/print_skipped.py;
-      echo "after_script done";
-    fi
+  - echo "after_script start"
+  - source activate pandas-dev && pushd /tmp && python -c "import pandas; pandas.show_versions();" && popd
+  - ci/print_skipped.py
+  - echo "after_script done"
