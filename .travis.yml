@@ -40,7 +40,7 @@ matrix:
 before_install:
   - echo "before_install"
   - if [[ "${JOB}" == "build_wheel" ]]; then
-      ci/build_wheel.sh;
+      ./ci/build_wheel.sh;
     fi
   # set non-blocking IO on travis
   # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
