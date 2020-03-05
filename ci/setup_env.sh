@@ -139,7 +139,7 @@ python setup.py build_ext -q -i -j2
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-python -m pip install --no-deps -U pip wheel setuptools
+python -m pip install --no-deps -U pip wheel setuptools pytest-xdist
 
 echo "[Install pandas]"
 python -m pip install --no-build-isolation -e .
