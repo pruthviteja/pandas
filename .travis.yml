@@ -12,10 +12,6 @@ cache:
     - $HOME/.cache # cython cache
     - $HOME/.ccache # compiler cache
     
-addons:
-  apt:
-    packages:
-    - xvfb
 env:
   global:
     # create a github personal access token
