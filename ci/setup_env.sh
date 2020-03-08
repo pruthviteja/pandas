@@ -36,12 +36,15 @@ else
   exit 1
 fi
 if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
-  wget -q "https://github.com/conda-forge/miniforge/releases/download/4.8.2-1/Miniforge3-4.8.2-1-Linux-aarch64.sh" -O miniconda.sh;
+  CONDA_URL = "https://github.com/conda-forge/miniforge/releases/download/4.8.2-1/Miniforge3-4.8.2-1-Linux-aarch64.sh";
 else
-  wget -q "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh" -O miniconda.sh;
+  CONDA_URL = "https://repo.continuum.io/miniconda/Miniconda3-latest-$CONDA_OS.sh";
 fi
+wget -q $CONDA_URL -O miniconda.sh;
 chmod +x miniconda.sh
 echo "Before"
+
+# Installation path is required for ARM64 platform as miniforge script installs in path $HOME/miniforge3.
 ./miniconda.sh -b -p $MINICONDA_DIR
 echo "after"
 export PATH=$MINICONDA_DIR/bin:$PATH
@@ -139,7 +142,7 @@ python setup.py build_ext -q -i -j2
 # - py35_compat
 # - py36_32bit
 echo "[Updating pip]"
-python -m pip install --no-deps -U pip wheel setuptools pytest-xdist
+python -m pip install --no-deps -U pip wheel setuptools
 
 echo "[Install pandas]"
 python -m pip install --no-build-isolation -e .
