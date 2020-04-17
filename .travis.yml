@@ -42,6 +42,7 @@ matrix:
            secure: YXGdtsEYKh0L88eIgm8E5e5AFmVvwIZhpif79uS5+o1+VZigRkTybdYep3TqbT6RBDXWaLu1CLjAE+lIESG4aJtqZO1WSnfcDojS0JZAnEpFNznjwgBqdBCuI0yGj6TpIBnqwBe2BPAv3hrhq4Cp7Gy3Yoprug2jQbHrMxSdnImycrigf3joaXRADjIcitwQVGXsg1Z3tuNHeo8/Vo2X22s3wcoNPrlqmMIZd4OtuAj45etJ1RQBIDrfDLCQY+xVlrg6NQF2FppkwZIwvyuxL7YgeK+Pw0VHyrgIZyltfcVfHcLDnmOMnTXBliVEi9ilQ+3o9RMytDO8HUv5yXFnNRVnNMVRSByJ28WNgRR0HcSvVW0ADbYguhjmdBJFEcZRtVD3QNLx16gnHwVpGC/dK1u1zdbXaY6wA3zUEhPYXO7NUy02uHR7lw30x8dECuH9K/mrMXhQGN4ugAqyIXxtCY5RW7gxEv6VC++7qOrgEg9jP6w0C8y6e7Rtk0FBQVRB2xHWQbrh/VtBTndwAkvbuf0JCFcTsf1yxqmG1kPNn4OmzvbMrJ0nHQb/Wzr4Hrtht58hRLhp4gi3dKxx2iEZFams2FCqmZtilJKymGXGx6qQuzf34R5rHZyAZCEQg81Ht+usTi6RvKNw9dkU/s8xc8ODRa71iSGmtAXjeupKics=
         on:
            repo: pruthviteja/pandas
+           branch: arm64_wheel
         distributions: sdist bdist_wheel
 
     - env:
