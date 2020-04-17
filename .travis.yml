@@ -34,7 +34,7 @@ matrix:
     - arch: arm64
       python: 3.6
       env:
-        - JOB="build_wheel"
+        - JOB="build_wheel" PIP_NO_CACHE_DIR=off
       deploy:
         provider: pypi
         user: mkp2020
